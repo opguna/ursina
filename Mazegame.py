@@ -28,7 +28,15 @@ class Warp(Entity):
                 
             )
         )
+        self.player = player
 
+        def update(self):
+            self.abcd()
+
+        def abcd(self) :
+            if self.warp.interesects(playersaw):
+                self.player.position = (95, 10 ,90)
+ 
 
 class Exit(Entity):
     def __init__(self, i, j):
