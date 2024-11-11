@@ -37,14 +37,18 @@ class Warp(Entity):
 class Coin(Entity):
     def __init__(self, x, y):
         super().__init__(
-            coin = Entity(
-                modle = 'sphere',
+                model = 'circle',
                 color = color.yellow,
-                scale = (10, 10, 10,),
-                position = (x * 5, 0, y * 5)
-
-            )
+                scale = 0.5,
+                position = (x * 5, 0, y * 5),
+                double_sided = True,
+                collider = 'box'            
         )
+    def update(self):
+        self.rotation_y += 1
+        if self.coin.intersects(player):
+            destroy(self)
+
 
 class Exit(Entity):
     def __init__(self, i, j):
@@ -114,6 +118,7 @@ MAP =[
     [11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,11,]
     ]
    
+walls = []
 
 
 for i in range(len(MAP)):
@@ -141,9 +146,13 @@ for i in range(len(MAP)):
                 #color = color.white,
                 scale = (5,20,5),
                 position = (i * 5, 0, j * 5),
-                collider = 'box'
+                collider = 'box',
+                texture = 'brick'
             )
-    
+            walls.append(wall)
+        else:
+            coin = Coin(i,j)
+
 
  
 ground = Entity(
